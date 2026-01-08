@@ -1,3 +1,4 @@
+import { Button } from 'peerstack/shared/components/Button/Button';
 import React from 'react';
 
 export default function StudentsFeature() {
