@@ -1,50 +1,50 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	--background: #ffffff;
+	--foreground: #171717;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-geist-sans);
+	--font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	:root {
+		--background: #0a0a0a;
+		--foreground: #ededed;
+	}
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	background: var(--background);
+	color: var(--foreground);
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 html, body {
-  overflow-x: hidden;
+	overflow-x: hidden;
 }
 
 .sidebar-icon {
-  transition: filter 180ms ease, opacity 160ms ease, transform 120ms ease;
-  filter: none;
-  display: inline-block;
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  max-width: 20px;
-  max-height: 20px;
-  object-fit: contain;
+	transition: filter 180ms ease, opacity 160ms ease, transform 120ms ease;
+	filter: none;
+	display: inline-block;
+	vertical-align: middle;
+	width: 20px;
+	height: 20px;
+	max-width: 20px;
+	max-height: 20px;
+	object-fit: contain;
 }
 
 .group:hover .sidebar-icon,
 .group:focus .sidebar-icon,
 .sidebar-active .sidebar-icon {
-  filter: invert(38%) sepia(44%) saturate(490%) hue-rotate(80deg) brightness(95%) contrast(90%);
+	filter: invert(38%) sepia(44%) saturate(490%) hue-rotate(80deg) brightness(95%) contrast(90%);
 }
 
 #devtools-indicator,
@@ -52,6 +52,6 @@ html, body {
 [data-nextjs-toast],
 [data-next-badge-root],
 [data-next-badge] {
-  display: none !important;
-  pointer-events: none !important;
+	display: none !important;
+	pointer-events: none !important;
 }

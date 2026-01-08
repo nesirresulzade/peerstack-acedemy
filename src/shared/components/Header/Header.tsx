@@ -61,11 +61,10 @@ export default function Header({
                                     type="button"
                                     onClick={handleClick}
                                     disabled={isTransitioning}
-                                    className={`text-[14px] px-3 py-2 transition-all duration-150 focus:outline-none ${isTransitioning ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} ${
-                                        isSelected
-                                            ? "bg-[#FFFFFF] rounded-full shadow-sm text-[#101828]"
-                                            : "bg-transparent rounded-full hover:bg-[#FFFFFF] text-[#4A5565] hover:text-[#101828]"
-                                    } ${idx === 0 ? "px-4" : ""}`}
+                                    className={`text-[14px] px-3 py-2 transition-all duration-150 focus:outline-none ${isTransitioning ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} ${isSelected
+                                        ? "bg-[#FFFFFF] rounded-full shadow-sm text-[#101828]"
+                                        : "bg-transparent rounded-full hover:bg-[#FFFFFF] text-[#4A5565] hover:text-[#101828]"
+                                        } ${idx === 0 ? "px-4" : ""}`}
                                     style={{ fontFamily: 'Arimo, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial' }}
                                 >
                                     {opt}
@@ -87,7 +86,7 @@ export default function Header({
                         <button
                             aria-label="Reload"
                             type="button"
-                            onClick={() => {}}
+                            onClick={() => { }}
                             disabled={isTransitioning}
                             className={`p-2 rounded-full hover:bg-[#F3F4F6] ${isTransitioning ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}>
                             <img src="/svglogos/reloadicon.svg" alt="Reload" className="w-5 h-5" />
