@@ -8,6 +8,8 @@ export type HeaderProps = {
     actionLabel?: string;
     onAction?: () => void;
     onFilterChange?: (filter: string) => void;
+    filterOpts?: string[];
+    showLastSync?: boolean;
     avatarInitials?: string;
     className?: string;
     showAvatar?: boolean;
@@ -22,6 +24,8 @@ export default function Header({
     actionLabel,
     onAction,
     onFilterChange,
+    filterOpts = ["January", "2026", "All"],
+    showLastSync = true,
     avatarInitials = "AA",
     className = "",
     showAvatar = true,
@@ -29,7 +33,6 @@ export default function Header({
     actionIcon,
     transitionDelayMs = 1500,
 }: HeaderProps) {
-    const filterOpts = ["January", "2026", "All"];
     const [selectedFilter, setSelectedFilter] = React.useState<string>(filterOpts[0]);
     const [isTransitioning, setIsTransitioning] = React.useState(false);
     const transitionMs = transitionDelayMs ?? 1500;
@@ -75,20 +78,22 @@ export default function Header({
 
             {/* Right: static actions (last sync, refresh, add button, avatar) */}
             <div className="flex items-center gap-4">
-                <div className="flex items-center text-sm gap-3">
-                    <div className="text-right">
-                        <div className="text-xs text-[#4A5565]">Last sync:</div>
-                        <div className="text-sm font-medium text-[#101828]">12:45</div>
+                {showLastSync !== false && (
+                    <div className="flex items-center text-sm gap-3">
+                        <div className="text-right">
+                            <div className="text-xs text-[#4A5565]">Last sync:</div>
+                            <div className="text-sm font-medium text-[#101828]">12:45</div>
+                        </div>
+                        <button
+                            aria-label="Reload"
+                            type="button"
+                            onClick={() => {}}
+                            disabled={isTransitioning}
+                            className={`p-2 rounded-full hover:bg-[#F3F4F6] ${isTransitioning ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}>
+                            <img src="/svglogos/reloadicon.svg" alt="Reload" className="w-5 h-5" />
+                        </button>
                     </div>
-                    <button
-                        aria-label="Reload"
-                        type="button"
-                        onClick={() => {}}
-                        disabled={isTransitioning}
-                        className={`p-2 rounded-full hover:bg-[#F3F4F6] ${isTransitioning ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}>
-                        <img src="/svglogos/reloadicon.svg" alt="Reload" className="w-5 h-5" />
-                    </button>
-                </div>
+                )}
 
                 <button
                     type="button"
