@@ -81,9 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({ items, logo, onCollapse, initialColla
                 >
                   <span style={{ width: 20, height: 20 }} className={`flex-shrink-0 ${isActive ? 'text-[#009966]' : 'text-[#4A5565]'} group-hover:text-[#009966]`}>
                     {item.icon ?? (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-                      </svg>
+                      <img src="/svglogos/nav-dot.svg" alt="nav" width={20} height={20} style={{ display: 'block' }} />
                     )}
                   </span>
 
@@ -102,35 +100,37 @@ const Sidebar: React.FC<SidebarProps> = ({ items, logo, onCollapse, initialColla
                     }}
                   >
                     {item.label}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+                    </span>
+                    </button>
+                  </li>
+              );
+            })}
+          </ul>
       </nav>
 
       <div className="px-4 py-4 flex items-center justify-center" style={{ boxShadow: 'inset 0 1px 0 rgba(16,24,40,0.04)' }}>
-        <button
-          type="button"
-          onClick={toggleCollapse}
-          className={`flex items-center justify-center border rounded-full bg-white cursor-pointer ${collapsed ? 'p-2' : 'py-2 px-4 w-full'}`}
-          style={collapsed ? { width: 40, height: 40, cursor: 'pointer' } : { minWidth: 160, cursor: 'pointer' }}
-          aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        >
-          {collapsed ? (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 6l6 6-6 6" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          ) : (
-            <>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 18l-6-6 6-6" stroke="#374151" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              <span className="text-sm">Collapse</span>
-            </>
-          )}
-        </button>
+        {collapsed ? (
+          <button
+            type="button"
+            data-slot="button"
+            onClick={toggleCollapse}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 gap-1.5 has-[&>svg]:px-2.5 rounded-xl w-12 h-12 p-0 cursor-pointer hover:bg-[#F3F4F6]"
+          >
+            <img src="/svglogos/chevron-right.svg" alt="open" className="w-5 h-5" width={20} height={20} />
+          </button>
+        ) : (
+          <button
+            type="button"
+            data-slot="button"
+            onClick={toggleCollapse}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background text-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-8 gap-1.5 px-3 has-[&>svg]:px-2.5 rounded-xl w-full cursor-pointer hover:bg-[#F3F4F6]"
+          >
+            <img src="/svglogos/chevron-left.svg" alt="collapse" className="w-5 h-5 mr-2" width={20} height={20} />
+            <span className="text-sm">Collapse</span>
+          </button>
+        )}
       </div>
     </aside>
   );
@@ -145,8 +145,6 @@ function LogoImage({ collapsed }: { collapsed: boolean }) {
     return (
       <>
         {collapsed ? (
-          // collapsed: show small icon that matches nav icons
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src="/imgs/peerstackicon.png"
             alt="peerstack"
@@ -156,8 +154,6 @@ function LogoImage({ collapsed }: { collapsed: boolean }) {
             style={{ objectFit: 'contain', display: 'block' }}
           />
         ) : (
-          // expanded: full logo
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src="/imgs/peerstacklogo.png"
             alt="peerstack"
