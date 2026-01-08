@@ -52,7 +52,8 @@ const Sidebar: React.FC<SidebarProps> = ({ items, logo, onCollapse, initialColla
                 <button
                   type="button"
                   onClick={item.onClick}
-                  className={`group rounded-md text-left hover:bg-[#ECFDF5] transition-colors cursor-pointer ${isActive ? 'sidebar-active' : ''} ${collapsed ? 'flex items-center justify-center' : 'flex items-center gap-3 w-full'}`}
+                  aria-disabled={!item.onClick}
+                  className={`group rounded-md text-left hover:bg-[#ECFDF5] transition-colors ${item.onClick ? 'cursor-pointer' : 'cursor-default opacity-80'} ${isActive ? 'sidebar-active' : ''} ${collapsed ? 'flex items-center justify-center' : 'flex items-center gap-3 w-full'}`}
                     style={
                       collapsed
                         ? {
