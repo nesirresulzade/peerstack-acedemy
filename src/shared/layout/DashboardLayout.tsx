@@ -1,5 +1,6 @@
 import React from 'react';
 import Sidebar from 'peerstack/shared/components/layout/Sidebar';
+import Header from 'peerstack/shared/components/Header/Header';
 
 const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const items = [
@@ -38,7 +39,10 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
     return (
         <div className="min-h-screen flex">
             <Sidebar items={items} />
-            <main className="flex-1 bg-gray-50 p-6">{children}</main>
+            <div className="flex-1 flex flex-col">
+                <Header />
+                <main className="flex-1 bg-gray-50 p-6">{children}</main>
+            </div>
         </div>
     );
 };
