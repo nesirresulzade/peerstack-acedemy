@@ -18,6 +18,8 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
 	const pathname = usePathname() || '/';
 	const router = useRouter();
 
+	const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
+
 	const items: Item[] = [
 		{
 			id: 'dashboard', label: 'Dashboard', icon: (
@@ -69,11 +71,11 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
 	const showLastSync = !pathname.startsWith('/students');
 
 	return (
-		<div className="min-h-screen flex">
-			<Sidebar items={itemsWithActive} />
-			<div className="flex-1 flex flex-col">
+		<div className="h-screen flex overflow-hidden overflow-x-hidden">
+			<Sidebar items={itemsWithActive} onCollapse={setSidebarCollapsed} />
+			<div className="flex-1 flex flex-col" style={{ ['--mainpanel-width' as any]: sidebarCollapsed ? '1392.8px' : '1216.8px' }}>
 				<Header filterOpts={headerFilterOpts} actionLabel={headerActionLabel} showLastSync={showLastSync} />
-				<main className="flex-1 bg-gray-50 p-6">{children}</main>
+				<main className="flex-1 bg-gray-50 p-6 overflow-auto">{children}</main>
 			</div>
 		</div>
 	);

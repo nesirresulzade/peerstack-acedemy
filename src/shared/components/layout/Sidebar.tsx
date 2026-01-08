@@ -79,14 +79,14 @@ const Sidebar: React.FC<SidebarProps> = ({ items, logo, onCollapse, initialColla
                           }
                     }
                 >
-                  <span style={{ width: 20, height: 20 }} className={`flex-shrink-0 ${isActive ? 'text-[#009966]' : 'text-[#4A5565]'} group-hover:text-[#009966]`}>
+                  <span style={{ width: 20, height: 20 }} className={`flex-shrink-0 ${isActive ? 'text-[#009966]' : 'text-black'} group-hover:text-[#009966]`}>
                     {item.icon ?? (
                       <img src="/svglogos/nav-dot.svg" alt="nav" width={20} height={20} style={{ display: 'block' }} />
                     )}
                   </span>
 
                   <span
-                    className={`${isActive ? 'text-[#009966]' : 'text-[#4A5565]'} group-hover:text-[#009966]`}
+                    className={`${isActive ? 'text-[#009966]' : 'text-black'} group-hover:text-[#009966]`}
                     style={{
                       fontSize: 16,
                       lineHeight: '24px',

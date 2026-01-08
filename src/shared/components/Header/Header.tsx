@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Button } from "peerstack/shared/components/Button/Button";
+import Avatar from 'peerstack/shared/components/Avatar/Avatar';
 
 export type HeaderProps = {
   left?: React.ReactNode;
@@ -133,9 +134,7 @@ export default function Header({
         />
 
         {showAvatar && (
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 text-white flex items-center justify-center font-semibold">
-            {avatarInitials}
-          </div>
+          <Avatar initials={avatarInitials} size={40} />
         )}
       </div>
     </header>
