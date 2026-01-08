@@ -77,7 +77,7 @@ export default function Header({
                   type="button"
                   onClick={handleClick}
                   disabled={isTransitioning}
-                  className={`text-[14px] px-3 py-2 transition-all duration-150 focus:outline-none ${
+                  className={` text-[14px] px-3 py-2 transition-all duration-150 focus:outline-none ${
                     isTransitioning ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
                   } ${
                     isSelected
