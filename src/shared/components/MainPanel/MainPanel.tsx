@@ -34,7 +34,7 @@ export default function MainPanel({
         backgroundColor: "#FFFFFF",
       }}
     >
-      <div className="flex items-center justify-between mb-3 px-6 py-5" style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)' }}>
+      <div className="flex items-center justify-between mb-2 px-6 py-5" style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)' }}>
         <div className="flex flex-col justify-center" style={{ height: 51, width: '100%' }}>
           <h3 className="font-bold text-gray-900 text-lg">{title}</h3>
           {subtitle ? (

@@ -1,19 +1,34 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import FilterControl from "peerstack/shared/components/FilterControl/FilterControl";
 import ActiveToggle from "peerstack/shared/components/ActiveToggle/ActiveToggle";
 
-export default function PaymentsFilters() {
+type Props = {
+	onHeightChange?: (h: number) => void;
+};
+
+export default function PaymentsFilters({ onHeightChange }: Props) {
 	const statusOptions = ["All Statuses", "Successful", "Pending", "Failed", "Refunded"];
 
 	const cohortsOptions = ["All Cohorts", "Cohort 1", "Cohort 2"];
 
-	const programsOptions = ["All Programs", "Program A", "Program B"];
+	const programsOptions = ["All Programs", "Back-End", "Front-End", "Full-Stack"];
+
+	const containerRef = useRef<HTMLDivElement | null>(null);
+
+	useEffect(() => {
+		if (!containerRef.current) return;
+		const el = containerRef.current;
+		const ro = new ResizeObserver(() => onHeightChange?.(el.clientHeight));
+		ro.observe(el);
+		onHeightChange?.(el.clientHeight);
+		return () => ro.disconnect();
+	}, [onHeightChange]);
 
 	return (
 		<div>
-			<div style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)', height: 55.99 }} className="flex items-center gap-6">
+			<div ref={containerRef} style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)', height: 55.99 }} className="flex items-center gap-6">
 				<FilterControl
 					label="Status"
 					variant="dropdown"
@@ -30,6 +45,7 @@ export default function PaymentsFilters() {
 					options={cohortsOptions}
 					defaultValue={cohortsOptions[0]}
 					multi={true}
+					persistKey="payments:cohorts"
 				/>
 
 				<FilterControl
@@ -38,6 +54,7 @@ export default function PaymentsFilters() {
 					options={programsOptions}
 					defaultValue={programsOptions[0]}
 					multi={true}
+					persistKey="payments:programs"
 				/>
 			</div>
 		</div>

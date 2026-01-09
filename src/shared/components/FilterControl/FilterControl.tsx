@@ -8,6 +8,7 @@ type Props = {
   options?: string[];
   defaultValue?: string | string[];
   multi?: boolean;
+  persistKey?: string;
   onChange?: (value: string) => void;
   className?: string;
 };
@@ -18,11 +19,20 @@ export default function FilterControl({
   options = [],
   defaultValue,
   multi = false,
+  persistKey,
   onChange,
   className = "",
 }: Props) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string[]>(() => {
+    try {
+      if (persistKey) {
+        const raw = localStorage.getItem(persistKey);
+        if (raw) return JSON.parse(raw) as string[];
+      }
+    } catch (e) {
+      // ignore
+    }
     if (Array.isArray(defaultValue)) return defaultValue as string[];
     if (typeof defaultValue === "string") return [defaultValue];
     return options && options.length ? [options[0]] : [];
@@ -39,6 +49,19 @@ export default function FilterControl({
   }, []);
 
   useEffect(() => {
+    // If a persistKey is provided prefer persisted value in localStorage.
+    if (persistKey) {
+      try {
+        const raw = localStorage.getItem(persistKey);
+        if (raw) {
+          setSelected(JSON.parse(raw) as string[]);
+          return;
+        }
+      } catch (e) {
+        // ignore and fall back to defaultValue
+      }
+    }
+
     if (defaultValue) {
       if (Array.isArray(defaultValue)) setSelected(defaultValue as string[]);
       else setSelected([defaultValue as string]);
@@ -60,6 +83,11 @@ export default function FilterControl({
         const exists = withoutAll.includes(val);
         const next = exists ? withoutAll.filter((v) => v !== val) : [...withoutAll, val];
         const result = next.length === 0 && options && options[0] ? [options[0]] : next;
+        try {
+          if (persistKey) localStorage.setItem(persistKey, JSON.stringify(result));
+        } catch (e) {
+          // ignore
+        }
         onChange?.(result.join(", "));
         return result;
       });
@@ -67,6 +95,11 @@ export default function FilterControl({
       return;
     }
     setSelected([val]);
+    try {
+      if (persistKey) localStorage.setItem(persistKey, JSON.stringify([val]));
+    } catch (e) {
+      // ignore
+    }
     setOpen(false);
     onChange?.(val);
   }
@@ -87,15 +120,18 @@ export default function FilterControl({
       if (firstIsAll && selected[0] === options[0]) return options[0];
       return selected[0];
     }
-    // If two or fewer selections, show their names (comma-separated).
-    if (selected.length <= 2) {
+    // If more than one selection, show a count instead of listing names.
+    if (selected.length > 1) {
+      if (selected.length === (options ? options.length : 0)) return options && options[0] ? options[0] : `${selected.length} Selected`;
       if (firstIsAll && selected.includes(options[0])) return options[0];
-      return selected.join(', ');
+      return `${selected.length} Selected`;
     }
 
-    if (selected.length === (options ? options.length : 0)) return options && options[0] ? options[0] : `${selected.length} Selected`;
-    if (firstIsAll && selected.includes(options[0])) return options[0];
-    return `${selected.length} Selected`;
+    // Single selection: show the name (or the 'All' label when applicable)
+    if (selected.length === 1) {
+      if (firstIsAll && selected[0] === options[0]) return options[0];
+      return selected[0];
+    }
   };
 
   const isButtonActive = (() => {
