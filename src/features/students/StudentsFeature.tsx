@@ -7,8 +7,7 @@ import Toolbar from 'peerstack/shared/components/Toolbar/Toolbar';
 export default function StudentsFeature() {
   const [filtersH, setFiltersH] = React.useState<number>(0);
 
-  // if filters wrap to second row, height will exceed ~56px; increase toolbar spacing
-  const toolbarMargin = filtersH > 80 ? 40 : 28; // px (increased slightly)
+  const toolbarMargin = filtersH > 80 ? 40 : 28;
 
   return (
     <div>
