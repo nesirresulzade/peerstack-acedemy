@@ -5,6 +5,10 @@ import DevToolsCleaner from 'peerstack/shared/components/DevToolsCleaner/DevTool
 export const metadata = {
 	title: 'Peerstack Admin',
 	description: 'Admin panel',
+	icons: {
+		icon: '/imgs/peerstackicon.png',
+		apple: '/imgs/peerstackicon.png'
+	}
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

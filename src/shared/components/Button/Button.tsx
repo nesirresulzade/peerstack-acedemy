@@ -8,6 +8,7 @@ export type ButtonProps = {
   disabled?: boolean;
   isTransitioning?: boolean;
   icon?: React.ReactNode;
+  className?: string;
 };
 
 export function Button({
@@ -16,6 +17,7 @@ export function Button({
   disabled = false,
   isTransitioning = false,
   icon,
+  className = "",
 }: ButtonProps) {
   const isDisabled = disabled || isTransitioning;
 
@@ -24,23 +26,12 @@ export function Button({
       type="button"
       onClick={onClick}
       disabled={isDisabled}
-      className={`flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm
-        disabled:opacity-50 disabled:cursor-not-allowed
-        ${isDisabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
+      className={`inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive h-8 gap-1.5 px-3 has-[&>svg]:px-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} ${className}`}
     >
       {icon ?? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          className="w-4 h-4"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-        </svg>
+        <img src="/svglogos/plus.svg" alt="add" className="w-4 h-4 lg:mr-2" width={16} height={16} />
       )}
-      <span>{label}</span>
+      <span className="hidden sm:inline">{label}</span>
     </button>
   );
 }

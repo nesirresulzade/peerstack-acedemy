@@ -29,6 +29,11 @@ html, body {
 	overflow-x: hidden;
 }
 
+/* Ensure Next root also hides horizontal overflow to avoid x-axis scrollbar */
+#__next {
+    overflow-x: hidden;
+}
+
 .sidebar-icon {
 	transition: filter 180ms ease, opacity 160ms ease, transform 120ms ease;
 	filter: none;
