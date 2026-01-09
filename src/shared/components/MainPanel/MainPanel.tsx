@@ -10,6 +10,9 @@ type Props = {
   subtitle?: string;
   children?: React.ReactNode;
   className?: string;
+  hideControls?: boolean;
+  controls?: React.ReactNode;
+  headerControls?: React.ReactNode;
 };
 
 export default function MainPanel({
@@ -17,6 +20,9 @@ export default function MainPanel({
   subtitle = "",
   children,
   className = "",
+  hideControls = false,
+  controls,
+  headerControls,
 }: Props) {
   return (
     <div
@@ -28,7 +34,7 @@ export default function MainPanel({
         backgroundColor: "#FFFFFF",
       }}
     >
-      <div className="flex items-center justify-between mb-6 px-6 py-5" style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)' }}>
+      <div className="flex items-center justify-between mb-3 px-6 py-5" style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)' }}>
         <div className="flex flex-col justify-center" style={{ height: 51, width: '100%' }}>
           <h3 className="font-bold text-gray-900 text-lg">{title}</h3>
           {subtitle ? (
@@ -53,39 +59,48 @@ export default function MainPanel({
             className={`bg-white !text-black border border-gray-200 hover:bg-gray-50 h-8 gap-1.5 px-3 rounded-lg relative`}
             icon={<img src="/svglogos/funnel.svg" alt="filters" className="w-4 h-4 mr-2" width={16} height={16} />}
           />
+          {headerControls ? <div className="ml-3">{headerControls}</div> : null}
         </div>
       </div>
 
       {/* Controls row (below header) */}
-      <div className="px-6">
-        <div style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)', height: 55.99 }} className="flex items-center gap-6">
-          <FilterControl
-            label="Status"
-            variant="dropdown"
-            options={["All Statuses", "Successful", "Pending", "Failed", "Refunded"]}
-            defaultValue="All Statuses"
-            multi={true}
-          />
+      {!hideControls ? (
+        <div className="px-6">
+          <div style={{ width: 'calc(var(--mainpanel-width, 1216.8px) - 49.6px)', height: 55.99 }} className="flex items-center gap-6">
+            {controls ? (
+              controls
+            ) : (
+              <>
+                <FilterControl
+                  label="Status"
+                  variant="dropdown"
+                  options={["All Statuses", "Successful", "Pending", "Failed", "Refunded"]}
+                  defaultValue="All Statuses"
+                  multi={true}
+                />
 
-          <ActiveToggle label="Payment type" defaultValue="Active" buttonLabel="1st Payments" />
+                <ActiveToggle label="Payment type" defaultValue="Active" buttonLabel="1st Payments" />
 
-          <FilterControl
-            label="Cohorts"
-            variant="dropdown"
-            options={["All Cohorts", "Cohort 1", "Cohort 2"]}
-            defaultValue="All Cohorts"
-            multi={true}
-          />
+                <FilterControl
+                  label="Cohorts"
+                  variant="dropdown"
+                  options={["All Cohorts", "Cohort 1", "Cohort 2"]}
+                  defaultValue="All Cohorts"
+                  multi={true}
+                />
 
-          <FilterControl
-            label="Programs"
-            variant="dropdown"
-            options={["All Programs", "Program A", "Program B"]}
-            defaultValue="All Programs"
-            multi={true}
-          />
+                <FilterControl
+                  label="Programs"
+                  variant="dropdown"
+                  options={["All Programs", "Program A", "Program B"]}
+                  defaultValue="All Programs"
+                  multi={true}
+                />
+              </>
+            )}
+          </div>
         </div>
-      </div>
+      ) : null}
 
       <div className="p-6 overflow-auto" style={{ height: "calc(100% - 64px)" }}>
         {children}

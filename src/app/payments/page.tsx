@@ -4,7 +4,11 @@ import MainPanel from 'peerstack/shared/components/MainPanel/MainPanel';
 
 export default function PaymentsPage() {
 	return (
-		<MainPanel title="All Payments" subtitle="Showing 1-25 of 76 payments">
+		<MainPanel
+			title="All Payments"
+			subtitle="Showing 1-25 of 76 payments"
+			hideControls={true}
+		>
 			<PaymentsFeature />
 		</MainPanel>
 	);

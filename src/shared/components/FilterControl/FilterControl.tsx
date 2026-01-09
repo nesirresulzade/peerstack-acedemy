@@ -87,6 +87,12 @@ export default function FilterControl({
       if (firstIsAll && selected[0] === options[0]) return options[0];
       return selected[0];
     }
+    // If two or fewer selections, show their names (comma-separated).
+    if (selected.length <= 2) {
+      if (firstIsAll && selected.includes(options[0])) return options[0];
+      return selected.join(', ');
+    }
+
     if (selected.length === (options ? options.length : 0)) return options && options[0] ? options[0] : `${selected.length} Selected`;
     if (firstIsAll && selected.includes(options[0])) return options[0];
     return `${selected.length} Selected`;
@@ -106,7 +112,7 @@ export default function FilterControl({
 
   return (
     <div className="flex flex-col" ref={ref}>
-      {label ? <div className="text-xs text-gray-500 uppercase">{label}</div> : null}
+      {label ? <div className="text-xs font-bold text-black uppercase">{label}</div> : null}
 
       {variant === "dropdown" ? (
         <div className="relative mt-2">

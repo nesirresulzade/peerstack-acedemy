@@ -1,5 +1,10 @@
 import React from 'react';
+import StudentsFilters from './components/StudentsFilters';
 
 export default function StudentsFeature() {
-  return <></>;
+  return (
+    <div>
+      <StudentsFilters />
+    </div>
+  );
 }

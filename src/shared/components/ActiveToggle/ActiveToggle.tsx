@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 type Props = {
   label?: string;
@@ -8,6 +8,7 @@ type Props = {
   buttonLabel?: string;
   onChange?: (value: "Active" | "Passive") => void;
   className?: string;
+  persistKey?: string;
 };
 
 export default function ActiveToggle({
@@ -16,18 +17,38 @@ export default function ActiveToggle({
   buttonLabel = "1st Payments",
   onChange,
   className = "",
+  persistKey,
 }: Props) {
   const [value, setValue] = useState<"Active" | "Passive">(defaultValue);
+
+  useEffect(() => {
+    if (!persistKey) return;
+    try {
+      const raw = localStorage.getItem(persistKey);
+      if (raw === "Active" || raw === "Passive") {
+        setValue(raw as "Active" | "Passive");
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [persistKey]);
 
   function toggleValue() {
     const next = value === "Active" ? "Passive" : "Active";
     setValue(next);
     onChange?.(next);
+    if (persistKey) {
+      try {
+        localStorage.setItem(persistKey, next);
+      } catch (e) {
+        // ignore
+      }
+    }
   }
 
   return (
     <div className="flex flex-col relative">
-      {label ? <div className="text-xs text-gray-500 uppercase">{label}</div> : null}
+      {label ? <div className="text-xs font-bold text-black uppercase">{label}</div> : null}
 
       <div className="mt-2">
         <button
