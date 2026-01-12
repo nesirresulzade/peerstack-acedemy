@@ -1,16 +1,15 @@
 "use client";
 
 import React from "react";
-import { Button } from "../Button/Button";
+import { Button } from "peerstack/shared/components/Button/Button";
+import Avatar from 'peerstack/shared/components/Avatar/Avatar';
 
 export type HeaderProps = {
   left?: React.ReactNode;
   title?: string;
 
-  // ✅ NEW: what tab are we on?
   activeTab?: "students" | "payments";
 
-  // optional override label
   actionLabel?: string;
 
   onAction?: () => void;
@@ -43,7 +42,13 @@ export default function Header({
   actionIcon,
   transitionDelayMs = 1500,
 }: HeaderProps) {
-  const [selectedFilter, setSelectedFilter] = React.useState<string>(filterOpts[0]);
+  const computedFilterOpts = (filterOpts && filterOpts.length > 0)
+    ? filterOpts
+    : activeTab === "students"
+    ? ["Active Student", "All"]
+    : ["January", "2026", "All"];
+
+  const [selectedFilter, setSelectedFilter] = React.useState<string>(computedFilterOpts[0]);
   const [isTransitioning, setIsTransitioning] = React.useState(false);
   const transitionMs = transitionDelayMs ?? 1500;
 
@@ -53,11 +58,11 @@ export default function Header({
     <header
       className={`w-full h-[76.8px] min-h-[76.8px] flex items-center justify-between px-6 bg-[#FFFFFF] ${className}`}
     >
-      {/* Left: static filters (Payments style) */}
+      {/* Left: filter pills (Figma design) */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3 py-2 shadow bg-[#F3F4F6] rounded-full">
-            {filterOpts.map((opt, idx) => {
+          <div className="flex items-center gap-2 bg-gray-100 rounded-xl p-1">
+            {computedFilterOpts.map((opt, idx) => {
               const isSelected = selectedFilter === opt;
 
               const handleClick = () => {
@@ -71,19 +76,19 @@ export default function Header({
                 }, transitionMs);
               };
 
+              const baseClass = "px-3 lg:px-4 py-2 text-sm rounded-lg transition-all";
+              const selectedClass = "bg-white text-gray-900 shadow-sm";
+              const normalClass = "text-gray-600 hover:text-gray-900";
+
               return (
                 <button
                   key={opt}
                   type="button"
                   onClick={handleClick}
                   disabled={isTransitioning}
-                  className={` text-[14px] px-3 py-2 transition-all duration-150 focus:outline-none ${
+                  className={`${baseClass} ${isSelected ? selectedClass : normalClass} ${
                     isTransitioning ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
-                  } ${
-                    isSelected
-                      ? "bg-[#FFFFFF] rounded-full shadow-sm text-[#101828]"
-                      : "bg-transparent rounded-full hover:bg-[#FFFFFF] text-[#4A5565] hover:text-[#101828]"
-                  } ${idx === 0 ? "px-4" : ""}`}
+                  }`}
                   style={{
                     fontFamily:
                       'Arimo, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial',
@@ -115,10 +120,11 @@ export default function Header({
                 isTransitioning ? "opacity-60 cursor-not-allowed" : "cursor-pointer"
               }`}
             >
-              <img src="/svglogos/reloadicon.svg" alt="Reload" className="w-5 h-5" />
+              <img src="/svglogos/reloadicon.svg" alt="Reload" width={16} height={16} className="w-4 h-4" />
             </button>
           </div>
         )}
+
 
         <Button
           label={actionLabel ?? computedLabel}
@@ -129,9 +135,7 @@ export default function Header({
         />
 
         {showAvatar && (
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 text-white flex items-center justify-center font-semibold">
-            {avatarInitials}
-          </div>
+          <Avatar initials={avatarInitials} size={40} />
         )}
       </div>
     </header>
